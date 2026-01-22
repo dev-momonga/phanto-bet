@@ -1,26 +1,22 @@
 function render(){
   const app = document.getElementById('app')
 
-  /* HOME */
   if(state.tela === 'home'){
     app.innerHTML = `
       <section class="hero">
         <div>
           <h1>Aposte com <span>confiança</span><br>nível profissional</h1>
           <p>Odds competitivas, pagamentos rápidos e uma plataforma moderna feita para quem leva apostas a sério.</p>
-          <button class="btn" onclick="go('dashboard')">
-            Entrar na plataforma
-          </button>
+          <button class="btn" onclick="go('dashboard')">Entrar na plataforma</button>
         </div>
 
         <div class="hero-img">
-          <img src="assets/mascote-phanto.png" style="width:100%;max-width:340px">
+          <img src="./assets/mascote-phanto.png" style="width:100%;max-width:340px">
         </div>
       </section>
     `
   }
 
-  /* DASHBOARD */
   if(state.tela === 'dashboard'){
     app.innerHTML = `
       <div class="card">
@@ -37,7 +33,6 @@ function render(){
     animarSaldo(state.saldo)
   }
 
-  /* APOSTAS */
   if(state.tela === 'bets'){
     app.innerHTML = `
       <div class="card">
