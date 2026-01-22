@@ -1,60 +1,45 @@
-/* Banner de Destaque */
-.hero-banner {
-  background: linear-gradient(135deg, var(--primary) 0%, #4c1d95 100%);
+.hero-card {
+  background: linear-gradient(135deg, #1e1b4b 0%, #4c1d95 100%);
   border-radius: var(--radius-lg);
   padding: 30px;
   margin-bottom: 25px;
   position: relative;
-  overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid var(--border);
 }
-.hero-banner h2 { font-size: 28px; font-weight: 900; margin-bottom: 10px; }
-.hero-banner p { color: rgba(255,255,255,0.8); font-size: 14px; max-width: 200px; }
-.hero-banner .btn-promo {
-  background: #fff; color: #000; padding: 10px 20px; 
-  border-radius: 8px; font-weight: bold; margin-top: 15px; display: inline-block;
-}
+.hero-card h1 { font-size: 28px; font-weight: 900; margin-bottom: 10px; }
+.hero-card p { color: var(--text-muted); font-size: 14px; max-width: 250px; }
 
-/* Categorias de Esportes */
-.categories {
-  display: flex;
-  gap: 12px;
-  overflow-x: auto;
-  padding-bottom: 15px;
-  margin-bottom: 20px;
-  scrollbar-width: none; /* Esconde scroll no Firefox */
-}
-.categories::-webkit-scrollbar { display: none; } /* Esconde scroll no Chrome */
-
+.category-bar { display: flex; gap: 10px; overflow-x: auto; margin-bottom: 25px; padding-bottom: 5px; }
 .cat-item {
   background: var(--surface);
-  padding: 10px 20px;
+  padding: 8px 18px;
   border-radius: 50px;
-  white-space: nowrap;
   font-size: 13px;
-  font-weight: 600;
+  white-space: nowrap;
   border: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  gap: 8px;
 }
-.cat-item.active {
-  background: var(--primary);
-  border-color: var(--primary);
-}
+.cat-item.active { background: var(--primary); border-color: var(--primary); }
 
-/* Badge de "Ao Vivo" */
-.live-badge {
-  background: var(--danger);
-  color: #fff;
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-size: 10px;
-  font-weight: bold;
-  animation: pulse 1.5s infinite;
+.game-card { padding: 15px !important; margin-bottom: 15px; }
+.match-main { display: flex; justify-content: space-between; align-items: center; margin: 15px 0; }
+.team { flex: 1; text-align: center; font-weight: 600; }
+.vs { color: var(--text-muted); font-size: 12px; }
+
+.odds-row { display: flex; gap: 8px; margin-top: 10px; }
+.btn-odd {
+  flex: 1; background: var(--bg); border: 1px solid var(--border);
+  padding: 10px; border-radius: 8px; color: #fff;
+  display: flex; justify-content: space-between; cursor: pointer;
 }
-@keyframes pulse {
-  0% { opacity: 1; }
-  50% { opacity: 0.5; }
-  100% { opacity: 1; }
+.btn-odd b { color: var(--accent); }
+.btn-odd.selected { background: var(--primary); border-color: #fff; }
+.btn-odd.selected b { color: #fff; }
+
+#cupom-drawer {
+  position: fixed; bottom: 80px; left: 5%; width: 90%;
+  background: var(--bg2); border: 1px solid var(--primary);
+  border-radius: 15px; z-index: 100; box-shadow: 0 -10px 30px rgba(0,0,0,0.5);
 }
+.cupom-header { background: var(--primary); padding: 10px; font-weight: bold; display: flex; justify-content: space-between; }
+.cupom-body { padding: 10px; max-height: 150px; overflow-y: auto; }
+.btn-apostar { background: var(--accent); color: #000; width: 100%; padding: 12px; border: none; font-weight: 900; border-radius: 8px; cursor: pointer; }
