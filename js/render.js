@@ -4,35 +4,29 @@ function render() {
   if (state.tela === 'home') {
     app.innerHTML = `
       <section class="hero-card">
-        <h1>Aposte com confiança <br> nível profissional</h1>
-        <p>Odds competitivas e pagamentos rápidos feitos para você.</p>
-        <div style="position:absolute; right:20px; bottom:20px; font-size:60px; opacity:0.3">👻</div>
+        <h1 style="font-size: 24px;">BRASILEIRÃO: RODADA 32</h1>
+        <p style="font-size: 13px;">As melhores cotações para os jogos de hoje.</p>
       </section>
 
-      <div class="category-bar">
-        <div class="cat-item active">⚽ Futebol</div>
-        <div class="cat-item">🏀 Basquete</div>
-        <div class="cat-item">🎮 eSports</div>
+      <div class="market-header">
+        <span>Evento</span>
+        <div class="odds-labels"><span>1</span><span>X</span><span>2</span></div>
       </div>
 
-      <h3>🔥 Jogos em Destaque</h3><br>
-      <div id="games">
+      <div class="games-table">
         ${state.liveGames.map(game => {
-          const isSel = (tipo, sel) => state.cupom.find(i => i.idUnico === `${game.id}-${tipo}-${sel}`) ? 'selected' : '';
+          const isSel = (s) => state.cupom.find(i => i.idUnico === `${game.id}-m-${s}`) ? 'selected' : '';
           return `
-            <div class="card game-card">
-              <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--accent)">
-                <span>${game.league}</span> <span>● ${game.time}</span>
+            <div class="game-row">
+              <div class="game-meta">
+                <span class="game-time">● ${game.time}</span>
+                <div class="game-teams">${game.home} vs ${game.away}</div>
+                <span style="font-size:10px; color:var(--text-muted)">${game.league}</span>
               </div>
-              <div class="match-main">
-                <div class="team">${game.home}</div>
-                <div class="vs">VS</div>
-                <div class="team">${game.away}</div>
-              </div>
-              <div class="odds-row">
-                <button class="btn-odd ${isSel('m','1')}" onclick="toggleAposta(${game.id},'m','1',${game.mainOdds.home})">1 <b>${game.mainOdds.home.toFixed(2)}</b></button>
-                <button class="btn-odd ${isSel('m','X')}" onclick="toggleAposta(${game.id},'m','X',${game.mainOdds.draw})">X <b>${game.mainOdds.draw.toFixed(2)}</b></button>
-                <button class="btn-odd ${isSel('m','2')}" onclick="toggleAposta(${game.id},'m','2',${game.mainOdds.away})">2 <b>${game.mainOdds.away.toFixed(2)}</b></button>
+              <div class="odds-labels">
+                <button class="btn-odd ${isSel('1')}" onclick="toggleAposta(${game.id},'m','1',${game.mainOdds.home})">${game.mainOdds.home.toFixed(2)}</button>
+                <button class="btn-odd ${isSel('X')}" onclick="toggleAposta(${game.id},'m','X',${game.mainOdds.draw})">${game.mainOdds.draw.toFixed(2)}</button>
+                <button class="btn-odd ${isSel('2')}" onclick="toggleAposta(${game.id},'m','2',${game.mainOdds.away})">${game.mainOdds.away.toFixed(2)}</button>
               </div>
             </div>`;
         }).join('')}
@@ -43,10 +37,18 @@ function render() {
   }
 
   if (state.tela === 'dashboard') {
-    app.innerHTML = `<div class='card' style="text-align:center">
-      <p style="color:var(--text-muted)">Saldo Total</p>
-      <h1 style="font-size:40px">R$ <span id='saldo'>0</span></h1>
-    </div>`;
+    app.innerHTML = `
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+        <div class='card'>
+          <p style="color:var(--text-muted)">Saldo da Conta</p>
+          <h2>R$ <span id='saldo'>0,00</span></h2>
+        </div>
+        <div class='card'>
+          <p style="color:var(--text-muted)">Apostas em Aberto</p>
+          <h2>${state.cupom.length}</h2>
+        </div>
+      </div>
+    `;
     animarSaldo(state.saldo);
   }
 }
@@ -60,12 +62,25 @@ function renderCupom() {
   const div = document.createElement('div');
   div.id = 'cupom-drawer';
   div.innerHTML = `
-    <div class="cupom-header"><span>Seu Bilhete (${state.cupom.length})</span><span onclick="state.cupom=[];render()">X</span></div>
-    <div class="cupom-body">
-      ${state.cupom.map(i => `<div style="font-size:12px; margin-bottom:5px"><b>${i.match}</b><br>${i.selecao} @${i.odd}</div>`).join('')}
-      <hr style="opacity:0.1; margin:10px 0">
-      <div style="display:flex; justify-content:space-between; margin-bottom:10px"><span>Total Odd:</span><b>${totalOdd.toFixed(2)}</b></div>
-      <button class="btn-apostar" onclick="finalizarAposta()">CONFIRMAR APOSTA</button>
+    <div style="background:var(--primary); padding:12px; font-weight:bold; display:flex; justify-content:space-between">
+      <span>BILHETE</span>
+      <span onclick="state.cupom=[];render()" style="cursor:pointer">✕</span>
+    </div>
+    <div style="padding:15px">
+      ${state.cupom.map(i => `
+        <div style="font-size:12px; margin-bottom:10px; border-bottom:1px solid var(--border); padding-bottom:5px">
+          <div style="color:var(--text-muted)">${i.match}</div>
+          <div style="display:flex; justify-content:space-between; font-weight:bold">
+            <span>Vencedor: ${i.selecao}</span>
+            <span style="color:var(--accent)">@${i.odd.toFixed(2)}</span>
+          </div>
+        </div>
+      `).join('')}
+      <div style="margin:15px 0; display:flex; justify-content:space-between; font-weight:900">
+        <span>ODD TOTAL:</span>
+        <span style="color:var(--accent)">${totalOdd.toFixed(2)}</span>
+      </div>
+      <button onclick="finalizarAposta()" style="width:100%; background:var(--accent); color:#000; border:none; padding:12px; font-weight:900; border-radius:6px; cursor:pointer">CONFIRMAR APOSTA</button>
     </div>`;
   document.body.appendChild(div);
 }
