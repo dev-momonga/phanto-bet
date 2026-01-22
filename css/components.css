@@ -1,39 +1,143 @@
-.logo{
-  font-size:26px;
-  font-weight:900;
-  color:var(--roxo);
+.logo {
+  font-size: 24px;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -1px;
 }
-nav a{
-  margin-left:20px;
-  cursor:pointer;
+nav a { margin-left: 20px; cursor: pointer; color: var(--text-muted); transition:0.3s }
+nav a:hover { color: #fff; }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
-.card{
-  background:var(--glass);
-  border:1px solid var(--border);
-  border-radius:22px;
-  padding:26px;
-  margin-bottom:25px;
+
+/* --- ESTILOS DE JOGO E ODDS --- */
+.match-card { display: flex; flex-direction: column; gap: 15px; }
+.teams {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  font-size: 1.1rem;
 }
-.bottom{
-  position:fixed;
-  bottom:0;
-  width:100%;
-  background:#0b0b14;
-  display:flex;
-  justify-content:space-around;
-  padding:12px 0;
+.vs { color: var(--text-muted); font-size: 0.8rem; font-weight: 400; }
+
+/* Botões Grandes (1x2) */
+.odds-container { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+.odd-btn {
+  background: var(--bg);
+  padding: 12px;
+  border-radius: var(--radius-md);
+  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid transparent;
+  transition: all 0.2s;
 }
-#mascote{
-  position:fixed;
-  right:20px;
-  bottom:90px;
-  text-align:center;
-  cursor:pointer;
+.odd-btn:hover { background: var(--surface-hover); }
+.odd-val { color: var(--accent); font-weight: 700; font-size: 14px; margin-top: 4px; }
+
+/* Botões Selecionados */
+.selected {
+  background: var(--primary) !important;
+  border-color: var(--primary) !important;
+  color: #fff !important;
+  box-shadow: 0 0 15px var(--primary-glow);
 }
-#mascote img{width:120px}
-#fala{
-  background:var(--roxo);
-  padding:10px 14px;
-  border-radius:14px;
-  margin-top:6px;
+.selected .odd-val, .selected b { color: #fff !important; }
+
+/* Mercados Extras (Gols, etc) */
+.market-title {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 10px 0 5px 0;
 }
+.extra-markets {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+}
+.odds-row { display: flex; gap: 5px; }
+.odd-small {
+  flex: 1;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px;
+  font-size: 11px;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: space-between;
+}
+.odd-small b { color: var(--accent); }
+
+/* --- CUPOM FLUTUANTE --- */
+#cupom-drawer {
+  position: fixed;
+  bottom: 85px; /* Acima da navbar */
+  left: 2.5%;
+  width: 95%;
+  background: var(--bg2);
+  border: 1px solid var(--primary);
+  border-radius: 16px;
+  z-index: 1000;
+  overflow: hidden;
+  box-shadow: 0 -5px 40px rgba(0,0,0,0.8);
+  animation: slideUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+@keyframes slideUp { from {transform: translateY(100%)} to {transform: translateY(0)} }
+
+.cupom-header {
+  background: var(--primary);
+  padding: 12px 20px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+}
+.cupom-body { padding: 0 20px; max-height: 200px; overflow-y: auto; }
+.cupom-item {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+.cupom-row { display: flex; justify-content: space-between; margin-top: 4px; }
+
+.cupom-footer {
+  background: #000;
+  padding: 15px 20px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+.btn-apostar {
+  background: var(--accent);
+  color: #000;
+  font-weight: 900;
+  padding: 12px 20px;
+  border-radius: 8px;
+  text-transform: uppercase;
+  flex: 1;
+}
+
+/* Nav Inferior e Mascote */
+.bottom {
+  position: fixed; bottom: 0; width: 100%;
+  background: rgba(9,9,11,0.95);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--border);
+  display: flex; justify-content: space-around; padding: 15px 0; z-index: 1001;
+}
+.bottom button { background: none; font-size: 22px; }
+#mascote { position: fixed; right: 20px; bottom: 100px; z-index: 90; text-align: center; pointer-events: none; }
+#mascote img { width: 80px; }
+#fala { background: var(--surface); padding: 8px; border-radius: 10px; font-size: 12px; border: 1px solid var(--primary); }
