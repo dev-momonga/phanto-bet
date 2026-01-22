@@ -1,12 +1,12 @@
 :root {
-  --bg: #09090b;
-  --bg2: #18181b;
-  --surface: #27272a;
-  --primary: #8b5cf6;
-  --primary-glow: rgba(139, 92, 246, 0.4);
-  --accent: #10b981;
-  --text-muted: #a1a1aa;
-  --border: rgba(255,255,255, 0.1);
-  --glass: rgba(24, 24, 27, 0.8);
-  --radius-lg: 20px;
+  --bg: #0b0e11;           /* Preto Binance/Bet365 */
+  --bg2: #15191d;          /* Superfície de cards */
+  --surface: #1e2329;      /* Hover e botões */
+  --primary: #7d40ff;      /* Roxo Neon */
+  --accent: #00ff88;       /* Verde Odds */
+  --text-main: #eaecef;
+  --text-muted: #848e9c;
+  --border: rgba(255,255,255, 0.05);
+  --radius-lg: 12px;       /* Bordas menos arredondadas = mais sério */
+  --radius-md: 6px;
 }
